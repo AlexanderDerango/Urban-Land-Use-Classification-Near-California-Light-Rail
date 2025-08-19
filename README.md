@@ -5,7 +5,7 @@
 This project processes NAIP imagery for multiple transit stops in California to analyze land use around each station. Land is classified into urban, transportation, parks, water, or undeveloped categories using a machine learning model. Transit stops include light rail in Sacramento, San Francisco, San Jose, San Diego, and Los Angeles. 
 
 ### Project Workflow
- * Data Acquisition:
+ * Data Acquisition
    * Gather coordinate data for all California light rail stations via GTFS feeds and web scraping
    * Retrieve NAIP imagery from Microsoft Planetary Computer
  * Segmentation
