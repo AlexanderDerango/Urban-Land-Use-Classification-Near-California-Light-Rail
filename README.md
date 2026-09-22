@@ -100,6 +100,10 @@ For example, the analysis included:
 
 * Classified Image - Archives Plaza Station, sacRT
 
+<img width="357" height="332" alt="image" src="https://github.com/user-attachments/assets/2f33362e-3c9d-49c3-b6e0-f3ec4ce5d652" />
+
+* Segmented Image - Archives Plaza Station, sacRT
+
 These results demonstrate how geospatial machine learning can be used to compare land-use patterns across large transit systems.
 
 ## Technologies
