@@ -1,12 +1,12 @@
 # Urban Land Use Classification Near California Light Rail
 
-A geospatial machine learning project that uses high-resolution NAIP aerial imagery to classify land use around California light rail stations. The project combines GIS, object-based image analysis, remote sensing features, and Random Forest classification to analyze land use patterns across five California transit systems.
-
 ## About
 
-The goal of this project was to explore how machine learning and geospatial data can be used to understand land use around public transportation.
+A machine learning and GIS project that uses high-resolution NAIP aerial imagery to classify land use around California light rail stations. The project combines image segmentation, remote sensing features, and Random Forest classification to analyze land-use patterns across five transit systems.
 
-We analyzed light rail stations across five California transit systems:
+## Project Overview
+
+The analysis covers five California light rail systems:
 
 * Sacramento Regional Transit (sacRT)
 * San Francisco Muni Metro (SFMTA)
@@ -14,73 +14,42 @@ We analyzed light rail stations across five California transit systems:
 * Los Angeles Metro (LAM)
 * San Diego Metropolitan Transit System (MTS)
 
-For each station, we created a 400-meter buffer and analyzed high-resolution NAIP aerial imagery to classify surrounding land into five categories:
+The final classification uses five land-use classes:
 
-* Buildings
+* Urban
 * Transportation
-* Parks / Open Space
+* Undeveloped
+* Parks/Open Space
 * Water
-* Undeveloped Land
 
-## Project Workflow
+Each station was analyzed using a **400-meter buffer** around the station.
 
-### 1. Data Acquisition
+## Methodology
 
-Station coordinates were collected using GTFS transit feeds, web scraping, and XML parsing. NAIP imagery was retrieved through Microsoft's Planetary Computer.
+### 1. Station & Imagery Data
 
-The imagery had a resolution of approximately 0.6 meters and was reprojected into appropriate projected coordinate systems for spatial analysis.
+Station locations were collected from transit agency datasets and web sources and converted to appropriate projected coordinate systems. NAIP aerial imagery was retrieved through the **Microsoft Planetary Computer**. Multiple imagery tiles were mosaicked when a station area crossed tile boundaries.
 
 ### 2. Image Segmentation
 
-Images were segmented into meaningful objects for **Object-Based Image Analysis (OBIA)**.
-
-The project used the Felzenszwalb graph-based segmentation algorithm, followed by post-processing to smooth polygons, simplify boundaries, and merge small segments.
+NAIP imagery was normalized and preprocessed before applying the **Felzenszwalb graph-based segmentation algorithm**. Small segments were merged and boundaries were smoothed to create geographic objects for analysis.
 
 ### 3. Feature Extraction
 
-Remote sensing, statistical, textural, and geometric features were extracted from each image segment.
+Features were calculated for each segmented object, including:
 
-Features included:
-
-* NDVI
-* NDWI
-* MSAVI2
-* SAVI
 * RGB and NIR reflectance statistics
+* NDVI, NDWI, MSAVI2, and SAVI
 * GLCM texture features
-* Polygon shape features
-* Hu moments
-* Solidity
+* Shape features including solidity and Hu moments
 
-Approximately 2,000 segments were manually labeled across selected stations and used to train the classification model.
+The resulting segments and features were converted into geographic polygons for classification and analysis.
 
 ### 4. Machine Learning
 
-A **Random Forest classifier** was trained to classify each segmented object into one of the five land-use categories.
+A **Random Forest classifier** was trained using manually labeled land-use segments. `GridSearchCV` was used to select model parameters, and performance was evaluated using 5-fold cross-validation and a held-out test set.
 
-GridSearchCV was used for hyperparameter tuning and cross-validation.
-
-**Best parameters:**
-
-* `n_estimators = 200`
-* `max_depth = 30`
-* `max_features = sqrt`
-* `min_samples_leaf = 2`
-* `min_samples_split = 2`
-
-### 5. Land Use Analysis
-
-After classifying the image segments, we calculated the proportion of each land-use category within the 400-meter station buffers.
-
-This allowed us to compare surrounding land use across individual stations and transit systems.
-
-## Results
-
-The Random Forest model achieved approximately **82% cross-validation accuracy**.
-
-Performance varied across land-use categories. The model performed particularly well for parks/open space, with a precision of approximately **0.91**, while water was more difficult to classify, with an F1-score of approximately **0.67**.
-
-The model generally performed well at identifying larger, clearly defined objects such as buildings. Smaller segmentation artifacts and visual similarities between building shadows and water created additional classification challenges.
+The final model achieved approximately **82% cross-validation accuracy**. Classification performance varied by land-use class, with water being more difficult to distinguish from other classes.
 
 ### Example Land Use Analysis
 
@@ -108,66 +77,25 @@ These results demonstrate how geospatial machine learning can be used to compare
 
 ## Technologies
 
-### Machine Learning & Computer Vision
-
-* Python
-* Scikit-learn
-* Random Forest
-* Object-Based Image Analysis (OBIA)
-* Image segmentation
-* Scikit-image
-
-### GIS & Remote Sensing
-
-* GeoPandas
-* Rasterio
-* Shapely
-* QGIS
-* NAIP aerial imagery
-* Microsoft Planetary Computer
-* NDVI / NDWI / SAVI / MSAVI2
-* GLCM texture analysis
-
-### Data Acquisition
-
-* GTFS
-* Web scraping
-* XML parsing
-* Requests
-* lxml
-* Fuzzy string matching
+**Python · GeoPandas · Rasterio · scikit-image · scikit-learn · Shapely · Pandas · NumPy · OpenCV · QGIS · Microsoft Planetary Computer**
 
 ## Project Structure
 
 ```text
-AISC-ML-Project-Spring2025/
 ├── bp_sq25_data_acq.py
-├── land_use_mix.py
-├── modeling.py
 ├── segmentation_features.py
-├── requirements.txt
-└── README.md
+├── modeling.py
+├── land_use_mix.py
+└── requirements.txt
 ```
-
-* `bp_sq25_data_acq.py` — Collects station coordinates and NAIP imagery
-* `land_use_mix.py` — Performs image segmentation and processing
-* `modeling.py` — Trains and applies the Random Forest classifier
-* `segmentation_features.py` — Extracts features and calculates land-use proportions
 
 ## Future Work
 
-Potential improvements include:
-
-* Improving image segmentation accuracy
-* Developing better shadow-removal techniques
-* Experimenting further with deep learning segmentation models
-* Comparing land use with station ridership
-* Analyzing additional stations across each transit system
-* Incorporating additional imagery or geospatial datasets
-* Improving classification of smaller or visually similar objects
-
-## Takeaways
-
-This project provided hands-on experience combining machine learning with GIS and remote sensing. A major takeaway was that model performance depends heavily on the quality of the underlying image segmentation and feature engineering.
+* Improve segmentation and boundary quality
+* Improve classification of visually similar land-use classes
+* Expand the analysis to additional stations
+* Explore deep learning-based segmentation and classification
+* Compare land-use patterns with transit ridership
+* Incorporate additional geospatial datasets
 
 The project also demonstrated how geospatial machine learning can be applied beyond individual image classification to conduct larger-scale comparisons of land use across transportation systems.
