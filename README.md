@@ -96,6 +96,10 @@ For example, the analysis included:
 | LAM            | 60.6% |          30.2% |        3.0% |  5.2% |  0.9% |
 | MTS            | 50.8% |          31.7% |        4.8% | 11.3% |  1.5% |
 
+<img width="567" height="557" alt="image" src="https://github.com/user-attachments/assets/05f5aad6-121d-4852-99ba-abd1b6f32c90" />
+
+* Classified Image - Archives Plaza Station, sacRT
+
 These results demonstrate how geospatial machine learning can be used to compare land-use patterns across large transit systems.
 
 ## Technologies
