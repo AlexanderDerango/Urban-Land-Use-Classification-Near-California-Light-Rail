@@ -87,7 +87,8 @@ These results demonstrate how geospatial machine learning can be used to compare
 ├── segmentation_features.py
 ├── modeling.py
 ├── land_use_mix.py
-└── requirements.txt
+├── requirements.txt
+└──README.md
 ```
 
 ## Future Work
