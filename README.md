@@ -82,6 +82,7 @@ These results demonstrate how geospatial machine learning can be used to compare
 ## Project Structure
 
 ```text
+├── Presentation.pdf
 ├── bp_sq25_data_acq.py
 ├── segmentation_features.py
 ├── modeling.py
